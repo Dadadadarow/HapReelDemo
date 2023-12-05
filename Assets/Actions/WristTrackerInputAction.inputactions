@@ -1,8 +1,8 @@
 {
-    "name": "ViveTrackerInputAction",
+    "name": "ViveTrackerInputAction 1",
     "maps": [
         {
-            "name": "ViveTrackerRacket",
+            "name": "WristTracker",
             "id": "cc3699f9-e16d-4884-83b8-b6f1000b4a3b",
             "actions": [
                 {
@@ -19,6 +19,15 @@
                     "type": "Value",
                     "id": "339fb4a2-f3d3-40ff-aabb-89b02e65483f",
                     "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Velocity",
+                    "type": "Value",
+                    "id": "d787a757-2b93-433c-a9d7-a9e7628a758b",
+                    "expectedControlType": "Vector3",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -44,6 +53,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "678cc30a-461e-4459-af0d-d20cf0122b58",
+                    "path": "<XRViveTracker>{Waist}/devicePose/velocity",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Velocity",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

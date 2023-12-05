@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataSender_v2 : MonoBehaviour
+public class DataSender : MonoBehaviour
 {
-    public SerialHandler_v2 serialHandler;
+    public SerialHandler serialHandler;
 
     [System.Serializable]
     public struct MotorControlPacket

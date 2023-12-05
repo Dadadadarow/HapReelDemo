@@ -8,7 +8,7 @@ using UnityEngine;
 using System.Threading;
 using System;
 
-public class SerialHandler_v2 : MonoBehaviour
+public class SerialHandler : MonoBehaviour
 {
     public string portName = "COM8";  // 適切なポート名を設定
     public int baudRate = 115200;
