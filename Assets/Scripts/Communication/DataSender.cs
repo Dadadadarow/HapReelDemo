@@ -26,13 +26,13 @@ public class DataSender : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SendMotorControlPacket(directions[clickCount], 0.2f, 10, 0.0f, 50f, 10.0f);
+        // if (Input.GetKeyDown(KeyCode.Space))
+        // {
+        //     SendMotorControlPacket(directions[clickCount], 0.2f, 10, 0.0f, 50f, 10.0f);
             
-            if(clickCount < 4)  clickCount++;
-            else clickCount = 0;
-        }
+        //     if(clickCount < 4)  clickCount++;
+        //     else clickCount = 0;
+        // }
     }
 
     public void SendMotorControlPacket(int direction, float returntime, float M, float freq, float A, float B)

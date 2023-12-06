@@ -7,21 +7,13 @@ using Valve.VR.InteractionSystem;
 public class PaddleForceController : MonoBehaviour
 {
     public VelocityEstimator ve;
-    [SerializeField] private float forceMultiplier = 0.01f;
-
-    private Vector3 lastPosition;
-    // private Vector3 _velocity;
+    [SerializeField] private float forceMultiplier = 0.03f;
+    [SerializeField] private float rotationMultiplier = 10000f;
     private Rigidbody rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        lastPosition = transform.position;
-    }
-
-    private void FixedUpdate()
-    {
-        lastPosition = transform.position;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -30,8 +22,15 @@ public class PaddleForceController : MonoBehaviour
         {
             Rigidbody ballRb = collision.gameObject.GetComponent<Rigidbody>();
             Vector3 hitDirection = ve.GetVelocityEstimate();
-            Debug.Log(ve.GetVelocityEstimate());
+
+            //normal vector of collision
+            Vector3 collisionNormal = collision.contacts[0].normal;
+            //calculate the rotation force depending on the racket speed and normal vector of collision
+            Vector3 rotationForce = Vector3.Cross(hitDirection, collisionNormal) * rotationMultiplier;
+
+            Debug.Log(rotationForce);
             ballRb.AddForce(hitDirection * forceMultiplier, ForceMode.Impulse);
+            ballRb.AddTorque(rotationForce, ForceMode.Impulse);
         }
     }
 }
