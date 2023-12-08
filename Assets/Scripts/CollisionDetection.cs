@@ -25,7 +25,7 @@ public class CollisionDetection : MonoBehaviour
         // 2つのモータで提示する力覚の方向を指示 0:STOP, 1:FORTH, 2:BACK, 3:LEFT, 4:RIGHT
         if (-0.1f <= localCollisionPoint.x && localCollisionPoint.x < -0.06)
         {
-            dataSender.SendMotorControlPacket(3,0.2f, 10, 0.0f, 50f, 10.0f);
+            dataSender.SendMotorControlPacket(3,0.2f, 20, 0.0f, 50f, 10.0f);
             Debug.Log("Detect 0");
         }
         else if (-0.06f <= localCollisionPoint.x && localCollisionPoint.x < -0.02f)
@@ -45,7 +45,7 @@ public class CollisionDetection : MonoBehaviour
         }
         else if (0.06f <= localCollisionPoint.x && localCollisionPoint.x <= 0.1f)
         {
-            dataSender.SendMotorControlPacket(4, 0.2f, 10, 0.0f, 50f, 10.0f);
+            dataSender.SendMotorControlPacket(4, 0.2f, 20, 0.0f, 50f, 10.0f);
             Debug.Log("Detect 4");
         }
     }

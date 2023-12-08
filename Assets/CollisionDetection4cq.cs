@@ -57,27 +57,27 @@ public class CollisionDetection4cq : MonoBehaviour
             // 2つのモータで提示する力覚の方向を指示 0:STOP, 1:FORTH, 2:BACK, 3:LEFT, 4:RIGHT
             if (-0.1f <= localCollisionPoint.x && localCollisionPoint.x < -0.06)
             {
-                dataSender.SendMotorControlPacket(0,0.2f, 10, 0.0f, 50f, 10.0f);
+                dataSender.SendMotorControlPacket(0,0.2f, 0, 0.0f, 50f, 10.0f);
                 Debug.Log("Detect 0");
             }
             else if (-0.06f <= localCollisionPoint.x && localCollisionPoint.x < -0.02f)
             {
-                dataSender.SendMotorControlPacket(0, 0.2f, 10, 0.0f, 50f, 10.0f);
+                dataSender.SendMotorControlPacket(0, 0.2f, 0, 0.0f, 50f, 0.0f);
                 Debug.Log("Detect 1");
             }
             else if (-0.02f <= localCollisionPoint.x && localCollisionPoint.x < 0.02f)
             {
-                dataSender.SendMotorControlPacket(0, 0.2f, 10, 0.0f, 50f, 10.0f);
+                dataSender.SendMotorControlPacket(0, 0.2f, 0, 0.0f, 50f, 10.0f);
                 Debug.Log("Detect 2");
             }
             else if (0.02f <= localCollisionPoint.x && localCollisionPoint.x < 0.06f)
             {
-                dataSender.SendMotorControlPacket(0, 0.2f, 10, 0.0f, 50f, 10.0f);
+                dataSender.SendMotorControlPacket(0, 0.2f, 0, 0.0f, 50f, 10.0f);
                 Debug.Log("Detect 3");
             }
             else if (0.06f <= localCollisionPoint.x && localCollisionPoint.x <= 0.1f)
             {
-                dataSender.SendMotorControlPacket(0, 0.2f, 10, 0.0f, 50f, 10.0f);
+                dataSender.SendMotorControlPacket(0, 0.2f, 0, 0.0f, 50f, 10.0f);
                 Debug.Log("Detect 4");
             }
         }

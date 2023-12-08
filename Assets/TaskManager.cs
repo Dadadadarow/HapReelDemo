@@ -12,6 +12,7 @@ public class TaskManager : MonoBehaviour
     public Transform respawnR;
     public Transform respawnRR;
     public bool isTorque = false;
+    public GameObject canvas;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +23,7 @@ public class TaskManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Sキーを押すとConceptモードを開始
+        // Cキーを押すとConceptモードを開始
         if (Input.GetKeyDown(KeyCode.S))
         {
             // 2秒ごとにランダムな位置にボールを生成する処理を開始し、6回繰り返す
@@ -30,9 +31,16 @@ public class TaskManager : MonoBehaviour
             Invoke("ChangeFeedbackMode", 10f); // 6秒後にモードを変更
             Invoke("StopSpawning", 20f); // 12秒後に処理を停止
         }
+        //Qキーを押すとQuestionモードを開始
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            CanvasFader.Begin (canvas, isFadeOut:false, duration:0.2f);
+            // CanvasFader.Begin (target:gameObject, isFadeOut:true, duration:0.2f, ignoreTimeScale:true, onFinished:OnFinished);
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             StopSpawning();
+            CanvasFader.Begin (canvas, isFadeOut:true, duration:0.2f);
         }
     }
 

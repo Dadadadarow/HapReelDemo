@@ -21,7 +21,7 @@ public class DataSender : MonoBehaviour
     public MotorControlPacket motorControlPacket;
 
     int[] directions = new int[] {0, 1, 2, 3, 4}; // 2つのモータで提示する力覚の方向を指示 0:STOP, 1:FORTH, 2:BACK, 3:LEFT, 4:RIGHT
-    int clickCount = 0;
+    // int clickCount = 0;
 
     // Update is called once per frame
     void Update()
