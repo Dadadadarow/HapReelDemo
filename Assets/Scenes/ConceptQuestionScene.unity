@@ -430,6 +430,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ball: {fileID: 6599809529482758835, guid: 208e2d6fd3d53de4c93aab94a3f090d6, type: 3}
+  racket: {fileID: 150292121}
   respawnRight: {fileID: 1186393992}
   respawnLeft: {fileID: 2020600376}
   respawnMid: {fileID: 1579746100}
