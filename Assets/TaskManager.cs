@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System.IO;
+using TMPro;
 
 public class TaskManager : MonoBehaviour
 {
+    // stage setting
     public GameObject ball;
     public GameObject racket;
     public Transform respawnLL;
@@ -11,39 +16,125 @@ public class TaskManager : MonoBehaviour
     public Transform respawnM;
     public Transform respawnR;
     public Transform respawnRR;
+    // task setting
+    GameObject canvas;
+    // GameObject panel;
+    public Fade panel;
+    TextMeshProUGUI text1;
+    int state = 0;
+    // TextPosition tp;
+
+    string strIntro1 = "Vibration";
+    string strIntro2 = "Vibration + Torque";
+    string strGuess = "Can you guess the collision point?";
+    string strAns = "The collision point is...";
+    string strConf = "How confident are you in your answers?";
+    int taskCount = 1;
+    bool isConceptStarted = false;
+    bool isQuestionStarted = false;
     public bool isTorque = false;
-    public GameObject canvas;
+    static LogSave csv = null; //staticにすると複数回呼び出された時に初期化されない、、、？？？
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (csv == null)
+        {
+            csv = new LogSave();
+        }
+        //Canvasを取得してcanvasに代入
+        canvas = GameObject.Find("Canvas");
+        text1 = canvas.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Cキーを押すとConceptモードを開始
-        if (Input.GetKeyDown(KeyCode.S))
+        // if (Input.GetKeyDown())
+        // {
+        //     state += 1;
+        //     switch(state)
+        //     {
+        //         case 1:
+        //             QuestionStart();
+        //     }
+        // }
+        
+        switch(state)
         {
-            // 2秒ごとにランダムな位置にボールを生成する処理を開始し、6回繰り返す
-            InvokeRepeating("SpawnRandomBall", 0f, 2f);
-            Invoke("ChangeFeedbackMode", 10f); // 6秒後にモードを変更
-            Invoke("StopSpawning", 20f); // 12秒後に処理を停止
+            case 0:
+                if (!isConceptStarted)
+                {
+                    panel.FadeIn(1f);
+                    StartCoroutine(ConceptMode());
+                    isConceptStarted = true;
+                }
+                break;
+            case 1:
+                if (!isQuestionStarted)
+                {
+                    StartCoroutine(QuestionMode());
+                    isQuestionStarted = true;
+                }
+                break;
         }
-        //Qキーを押すとQuestionモードを開始
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            CanvasFader.Begin (canvas, isFadeOut:false, duration:0.2f);
-            // コルーチンを使って、タスクの質問とランダムなスポーンを繰り返す。
-            
-            // CanvasFader.Begin (target:gameObject, isFadeOut:true, duration:0.2f, ignoreTimeScale:true, onFinished:OnFinished);
-        }
+
+        // //Qキーを押すとQuestionモードを開始
+        // if (Input.GetKeyDown(KeyCode.Q))
+        // {
+        //     CanvasFader.Begin (canvas, isFadeOut:false, duration:1.5f);
+        //     // コルーチンを使って、タスクの質問とランダムなスポーンを繰り返す。
+
+        //     // CanvasFader.Begin (target:gameObject, isFadeOut:true, duration:0.2f, ignoreTimeScale:true, onFinished:OnFinished);
+        // }
+        // if (Input.GetKeyDown(KeyCode.Escape))
+        // {
+        //     StopSpawning();
+        //     CanvasFader.Begin (canvas, isFadeOut:true, duration:0.2f);
+        // }
+
+        // if (Input.GetKeyDown(KeyCode.Keypad1))
+        // {
+        //     Debug.Log("Answer 0");
+        // }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            StopSpawning();
-            CanvasFader.Begin (canvas, isFadeOut:true, duration:0.2f);
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #elif UNITY_STANDALONE
+                UnityEngine.Application.Quit();
+            #endif
         }
+    }
+
+    IEnumerator ConceptMode()
+    {
+        // 【Conceptモード】
+        // 2秒ごとにランダムな位置にボールを生成する処理を開始し、10回繰り返す
+        // panel.FadeIn(1f);
+        // yield return new WaitForSeconds(1.5f);
+        canvas.SetActive(true);
+        text1.SetText(strIntro1);
+        for (int i = 0; i < 2; i++)
+        {
+            SpawnRandomBall();
+            yield return new WaitForSeconds(2f);
+        }
+        ChangeFeedbackMode();
+        text1.SetText(strIntro2);
+        for (int i = 0; i < 2; i++)
+        {
+            SpawnRandomBall();
+            yield return new WaitForSeconds(2f);
+        }
+        state++;
+    }
+
+    IEnumerator QuestionMode()
+    {
+        panel.FadeOut(1f);
+        text1.SetText(strGuess);
+        yield return new WaitForSeconds(1f);
     }
 
     // ランダムな位置にボールを生成するメソッド
@@ -83,17 +174,54 @@ public class TaskManager : MonoBehaviour
         }
     }
 
-    // 処理を停止するメソッド
-    void StopSpawning()
-    {
-        CancelInvoke("SpawnRandomBall");
-    }
-
     void ChangeFeedbackMode()
     {
         if (!isTorque)
         {
             isTorque = true;
+        }
+    }
+}
+
+public class LogSave
+{
+    string filename;
+    FileInfo fi;
+
+    public LogSave()
+    {
+        System.DateTime thisDay = System.DateTime.Now;
+        string day = //thisDay.Year.ToString() +
+            thisDay.Month.ToString() +
+            thisDay.Day.ToString() +
+            "_" +
+            thisDay.Hour.ToString() +
+            thisDay.Minute.ToString();
+        //filename = @"C:/Users/yuki/Documents/FileName" + day + ".csv";
+        //↑このように絶対パスでフォルダ位置を指定することもできる
+        filename = "FileName" + day + ".csv";
+        //↑Assetsと同じフォルダに保存される。
+        //ProjectウィンドウからAssetsを右クリックしShowInExplorerを選ぶとフォルダが開ける
+
+        fi = new FileInfo(filename);
+        //fi = new FileInfo(Application.dataPath + "../FileName.csv");
+
+        using (var sw = new StreamWriter(
+                fi.Create(),
+                System.Text.Encoding.UTF8))
+        {
+            sw.WriteLine("," + "動き始めてからボタンを押すまでの時間" +
+                            "," + "ボタンを押した総時間" +
+                            "," + "主観的強度");
+        }
+    }
+
+    public void logSave(string txt)
+    {
+        //作ったファイルに追加で書き込む場合はAppendText
+        using (StreamWriter sw = fi.AppendText())
+        {
+            sw.WriteLine(txt);
         }
     }
 }

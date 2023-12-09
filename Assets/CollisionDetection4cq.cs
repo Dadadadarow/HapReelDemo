@@ -29,27 +29,27 @@ public class CollisionDetection4cq : MonoBehaviour
             if (-0.1f <= localCollisionPoint.x && localCollisionPoint.x < -0.06)
             {
                 dataSender.SendMotorControlPacket(3,0.2f, 10, 0.0f, 50f, 10.0f);
-                Debug.Log("Detect 0");
+                // Debug.Log("Detect 0");
             }
             else if (-0.06f <= localCollisionPoint.x && localCollisionPoint.x < -0.02f)
             {
                 dataSender.SendMotorControlPacket(3, 0.2f, 10, 0.0f, 50f, 10.0f);
-                Debug.Log("Detect 1");
+                // Debug.Log("Detect 1");
             }
             else if (-0.02f <= localCollisionPoint.x && localCollisionPoint.x < 0.02f)
             {
                 dataSender.SendMotorControlPacket(2, 0.2f, 10, 0.0f, 50f, 10.0f);
-                Debug.Log("Detect 2");
+                // Debug.Log("Detect 2");
             }
             else if (0.02f <= localCollisionPoint.x && localCollisionPoint.x < 0.06f)
             {
                 dataSender.SendMotorControlPacket(4, 0.2f, 10, 0.0f, 50f, 10.0f);
-                Debug.Log("Detect 3");
+                // Debug.Log("Detect 3");
             }
             else if (0.06f <= localCollisionPoint.x && localCollisionPoint.x <= 0.1f)
             {
                 dataSender.SendMotorControlPacket(4, 0.2f, 10, 0.0f, 50f, 10.0f);
-                Debug.Log("Detect 4");
+                // Debug.Log("Detect 4");
             }
         }
         else
@@ -58,27 +58,27 @@ public class CollisionDetection4cq : MonoBehaviour
             if (-0.1f <= localCollisionPoint.x && localCollisionPoint.x < -0.06)
             {
                 dataSender.SendMotorControlPacket(0,0.2f, 0, 0.0f, 50f, 10.0f);
-                Debug.Log("Detect 0");
+                // Debug.Log("Detect 0");
             }
             else if (-0.06f <= localCollisionPoint.x && localCollisionPoint.x < -0.02f)
             {
                 dataSender.SendMotorControlPacket(0, 0.2f, 0, 0.0f, 50f, 0.0f);
-                Debug.Log("Detect 1");
+                // Debug.Log("Detect 1");
             }
             else if (-0.02f <= localCollisionPoint.x && localCollisionPoint.x < 0.02f)
             {
                 dataSender.SendMotorControlPacket(0, 0.2f, 0, 0.0f, 50f, 10.0f);
-                Debug.Log("Detect 2");
+                // Debug.Log("Detect 2");
             }
             else if (0.02f <= localCollisionPoint.x && localCollisionPoint.x < 0.06f)
             {
                 dataSender.SendMotorControlPacket(0, 0.2f, 0, 0.0f, 50f, 10.0f);
-                Debug.Log("Detect 3");
+                // Debug.Log("Detect 3");
             }
             else if (0.06f <= localCollisionPoint.x && localCollisionPoint.x <= 0.1f)
             {
                 dataSender.SendMotorControlPacket(0, 0.2f, 0, 0.0f, 50f, 10.0f);
-                Debug.Log("Detect 4");
+                // Debug.Log("Detect 4");
             }
         }
     }
