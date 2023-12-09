@@ -35,6 +35,8 @@ public class TaskManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             CanvasFader.Begin (canvas, isFadeOut:false, duration:0.2f);
+            // コルーチンを使って、タスクの質問とランダムなスポーンを繰り返す。
+            
             // CanvasFader.Begin (target:gameObject, isFadeOut:true, duration:0.2f, ignoreTimeScale:true, onFinished:OnFinished);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
