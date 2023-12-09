@@ -49,7 +49,7 @@ public sealed class Fade : MonoBehaviour
         var elapsed_time    = 0.0f;
         var color           = m_image.color;
 
-        while ( elapsed_time < duration )
+        while ( elapsed_time <= duration+0.2f)
         {
             var elapsed_rate    = Mathf.Min( elapsed_time / duration, 1.0f );
             color.a             = is_reversing ? 1.0f - elapsed_rate : elapsed_rate;
@@ -57,13 +57,7 @@ public sealed class Fade : MonoBehaviour
             
             yield return null;
             elapsed_time += Time.deltaTime;
-        }
-        if (is_reversing){
-            color.a = 0;
-        }
-        else
-        {
-            color.a = 255;
+            Debug.Log(elapsed_rate);
         }
         if ( is_reversing )         m_image.enabled = false;
         if ( on_completed != null ) on_completed();

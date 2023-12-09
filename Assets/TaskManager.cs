@@ -27,8 +27,8 @@ public class TaskManager : MonoBehaviour
     string strIntro1 = "Vibration";
     string strIntro2 = "Vibration + Torque";
     string strGuess = "Can you guess the collision point?";
-    string strAns = "The collision point is...";
-    string strConf = "How confident are you in your answers?";
+    string strAns = "The collision point is...\n(Select 1-5 key)";
+    string strConf = "How confident are you in your answers?\n(Select 1-7 key)";
     int taskCount = 1;
     int randomIndex;
     bool isConceptStarted = false;
@@ -116,14 +116,14 @@ public class TaskManager : MonoBehaviour
         // yield return new WaitForSeconds(1.5f);
         canvas.SetActive(true);
         text1.SetText(strIntro1);
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 1; i++)
         {
             SpawnRandomBall();
             yield return new WaitForSeconds(2f);
         }
         ChangeFeedbackMode();
         text1.SetText(strIntro2);
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 1; i++)
         {
             SpawnRandomBall();
             yield return new WaitForSeconds(2f);
@@ -133,24 +133,76 @@ public class TaskManager : MonoBehaviour
 
     IEnumerator QuestionMode()
     {
+        int correctCount = 0;
         panel.FadeOut(1f);
         text1.SetText(strGuess);
         yield return new WaitForSeconds(2f);
         for (int i = 0; i < 5; i++)
         {
-            StartCoroutine(CountDown());
-            yield return new WaitForSeconds(3f);
+            StartCoroutine(CountDown(1));
+            yield return new WaitForSeconds(1f);
             SpawnRandomBall();
-            int correctIndex = randomIndex;
+
+            // 位置の回答
+            int correctIndex = randomIndex+1;
+            int selectedAnswerPos = -1;
+            bool validInput = false;
+            bool correctFlag = false;
+
             text1.SetText(strAns);
+            while (!Input.GetKeyDown(KeyCode.Return) || selectedAnswerPos == -1)
+            {
+                for (int j = 1; j <= 5; j++)
+                {
+                    if (Input.GetKeyDown(j.ToString()))
+                    {
+                        selectedAnswerPos = j;
+                        text1.SetText("Your choise is " + j.ToString() + "\nEnter to next");
+                        validInput = true;
+                        break;
+                    }
+                }
+                yield return null;
+            }
+
+            //自信度
+            text1.SetText(strConf);
+            validInput = false;
+            int selectedAnswerConf = -1;
+            while (!Input.GetKeyDown(KeyCode.Return) || selectedAnswerConf == -1)
+            {
+                Debug.Log("here5");
+
+                for (int j = 1; j <= 7; j++)
+                {
+                    if (Input.GetKeyDown(j.ToString()))
+                    {
+                        selectedAnswerConf = j;
+                        text1.SetText("Your choise is " + j.ToString() + "\nEnter to next");
+                        validInput = true;
+                        break;
+                    }
+                }
+                yield return null;
+            }
+            if (correctIndex == selectedAnswerPos)
+            {
+                correctFlag = true;
+                correctCount++;
+            }
+
+            // 回答のCSVへの蓄積
+            csv.logSave("," + correctIndex + "," + selectedAnswerPos + "," + selectedAnswerConf);
+
         }
+        text1.SetText("Your accuracy is " + ((correctCount/5)*100).ToString() + "%");
     }
 
-    IEnumerator CountDown()
+    IEnumerator CountDown(int sec)
     {
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < sec; i++)
         {
-            text1.SetText((3-i).ToString());
+            text1.SetText((sec-i).ToString());
             yield return new WaitForSeconds(1f);
         }
     }
@@ -216,7 +268,7 @@ public class LogSave
             thisDay.Minute.ToString();
         //filename = @"C:/Users/yuki/Documents/FileName" + day + ".csv";
         //↑このように絶対パスでフォルダ位置を指定することもできる
-        filename = "FileName" + day + ".csv";
+        filename = "test" + day + ".csv";
         //↑Assetsと同じフォルダに保存される。
         //ProjectウィンドウからAssetsを右クリックしShowInExplorerを選ぶとフォルダが開ける
 
@@ -227,9 +279,9 @@ public class LogSave
                 fi.Create(),
                 System.Text.Encoding.UTF8))
         {
-            sw.WriteLine("," + "動き始めてからボタンを押すまでの時間" +
-                            "," + "ボタンを押した総時間" +
-                            "," + "主観的強度");
+            sw.WriteLine("," + "SelectedAnswerPos" +
+                            "," + "CorrectAnswer" +
+                            "," + "SelectedAnswerConfident");
         }
     }
 
