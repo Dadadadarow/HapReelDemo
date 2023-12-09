@@ -30,6 +30,7 @@ public class TaskManager : MonoBehaviour
     string strAns = "The collision point is...";
     string strConf = "How confident are you in your answers?";
     int taskCount = 1;
+    int randomIndex;
     bool isConceptStarted = false;
     bool isQuestionStarted = false;
     public bool isTorque = false;
@@ -134,9 +135,25 @@ public class TaskManager : MonoBehaviour
     {
         panel.FadeOut(1f);
         text1.SetText(strGuess);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
+        for (int i = 0; i < 5; i++)
+        {
+            StartCoroutine(CountDown());
+            yield return new WaitForSeconds(3f);
+            SpawnRandomBall();
+            int correctIndex = randomIndex;
+            text1.SetText(strAns);
+        }
     }
 
+    IEnumerator CountDown()
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            text1.SetText((3-i).ToString());
+            yield return new WaitForSeconds(1f);
+        }
+    }
     // ランダムな位置にボールを生成するメソッド
     void SpawnRandomBall()
     {
@@ -155,7 +172,7 @@ public class TaskManager : MonoBehaviour
     // ランダムな位置を取得するメソッド
     Vector3 GetRandomRespawnPosition()
     {
-        int randomIndex = Random.Range(0, 4);
+        randomIndex = Random.Range(0, 4);
 
         switch (randomIndex)
         {
