@@ -29,7 +29,7 @@ public class CollisionDetection4cq : MonoBehaviour
             if (-0.1f <= localCollisionPoint.x && localCollisionPoint.x < -0.06)
             {
                 dataSender.SendMotorControlPacket(4,0.2f, 20, 0.0f, 10f, 10.0f);
-                // Debug.Log("Detect 0");
+                // Debug.Log("De");
             }
             else if (-0.06f <= localCollisionPoint.x && localCollisionPoint.x < -0.02f)
             {
@@ -67,7 +67,7 @@ public class CollisionDetection4cq : MonoBehaviour
             }
             else if (-0.02f <= localCollisionPoint.x && localCollisionPoint.x < 0.02f)
             {
-                dataSender.SendMotorControlPacket(3, 0.2f, 0, 0.0f, 500f, 10.0f);
+                dataSender.SendMotorControlPacket(3, 0.2f, 0, 0.0f, 50f, 10.0f);
                 // Debug.Log("Detect 2");
             }
             else if (0.02f <= localCollisionPoint.x && localCollisionPoint.x < 0.06f)
