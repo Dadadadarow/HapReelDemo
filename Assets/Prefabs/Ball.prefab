@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6599809529494606161}
   - component: {fileID: 6599809529487968085}
   - component: {fileID: 6599809529209515894}
+  - component: {fileID: 5396883328891048578}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Ball
@@ -131,3 +132,15 @@ MonoBehaviour:
   smashHitSE: {fileID: 8300000, guid: 36fb8fb19ee0ed14dae643c5abe37276, type: 3}
   normalHitVolume: 0.3
   smashHitVolume: 0.2
+--- !u!114 &5396883328891048578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6599809529482758835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3358e82185a7de843a1d35b174798608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

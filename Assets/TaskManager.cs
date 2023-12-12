@@ -79,25 +79,6 @@ public class TaskManager : MonoBehaviour
                 }
                 break;
         }
-
-        // //Qキーを押すとQuestionモードを開始
-        // if (Input.GetKeyDown(KeyCode.Q))
-        // {
-        //     CanvasFader.Begin (canvas, isFadeOut:false, duration:1.5f);
-        //     // コルーチンを使って、タスクの質問とランダムなスポーンを繰り返す。
-
-        //     // CanvasFader.Begin (target:gameObject, isFadeOut:true, duration:0.2f, ignoreTimeScale:true, onFinished:OnFinished);
-        // }
-        // if (Input.GetKeyDown(KeyCode.Escape))
-        // {
-        //     StopSpawning();
-        //     CanvasFader.Begin (canvas, isFadeOut:true, duration:0.2f);
-        // }
-
-        // if (Input.GetKeyDown(KeyCode.Keypad1))
-        // {
-        //     Debug.Log("Answer 0");
-        // }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             #if UNITY_EDITOR
@@ -116,14 +97,14 @@ public class TaskManager : MonoBehaviour
         // yield return new WaitForSeconds(1.5f);
         canvas.SetActive(true);
         text1.SetText(strIntro1);
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 5; i++)
         {
             SpawnRandomBall();
             yield return new WaitForSeconds(2f);
         }
         ChangeFeedbackMode();
         text1.SetText(strIntro2);
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < 5; i++)
         {
             SpawnRandomBall();
             yield return new WaitForSeconds(2f);
@@ -139,15 +120,14 @@ public class TaskManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
         for (int i = 0; i < 5; i++)
         {
-            StartCoroutine(CountDown(1));
-            yield return new WaitForSeconds(1f);
+            StartCoroutine(CountDown(3));
+            yield return new WaitForSeconds(3f);
             SpawnRandomBall();
 
             // 位置の回答
             int correctIndex = randomIndex+1;
             int selectedAnswerPos = -1;
             bool validInput = false;
-            bool correctFlag = false;
 
             text1.SetText(strAns);
             while (!Input.GetKeyDown(KeyCode.Return) || selectedAnswerPos == -1)
@@ -185,15 +165,15 @@ public class TaskManager : MonoBehaviour
                 }
                 yield return null;
             }
+
             if (correctIndex == selectedAnswerPos)
             {
-                correctFlag = true;
                 correctCount++;
+                // Debug.Log();
             }
 
             // 回答のCSVへの蓄積
             csv.logSave("," + correctIndex + "," + selectedAnswerPos + "," + selectedAnswerConf);
-
         }
         text1.SetText("Your accuracy is " + ((correctCount/5)*100).ToString() + "%");
     }
