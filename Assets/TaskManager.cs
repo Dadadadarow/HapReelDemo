@@ -95,18 +95,19 @@ public class TaskManager : MonoBehaviour
         // 2秒ごとにランダムな位置にボールを生成する処理を開始し、10回繰り返す
         // panel.FadeIn(1f);
         // yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2f);
         canvas.SetActive(true);
         text1.SetText(strIntro1);
         for (int i = 0; i < 5; i++)
         {
-            SpawnRandomBall();
+            SpawnRandomBall(false, i);
             yield return new WaitForSeconds(2f);
         }
         ChangeFeedbackMode();
         text1.SetText(strIntro2);
         for (int i = 0; i < 5; i++)
         {
-            SpawnRandomBall();
+            SpawnRandomBall(false, i);
             yield return new WaitForSeconds(2f);
         }
         state++;
@@ -122,7 +123,7 @@ public class TaskManager : MonoBehaviour
         {
             StartCoroutine(CountDown(3));
             yield return new WaitForSeconds(3f);
-            SpawnRandomBall();
+            SpawnRandomBall(true, 0);
 
             // 位置の回答
             int correctIndex = randomIndex+1;
@@ -187,9 +188,9 @@ public class TaskManager : MonoBehaviour
         }
     }
     // ランダムな位置にボールを生成するメソッド
-    void SpawnRandomBall()
+    void SpawnRandomBall(bool randomFlag, int spawnPosition)
     {
-        Vector3 randomRespawnPosition = GetRandomRespawnPosition();
+        Vector3 randomRespawnPosition = GetRandomRespawnPosition(randomFlag, spawnPosition);
         SpawnBall(randomRespawnPosition);
     }
 
@@ -202,16 +203,19 @@ public class TaskManager : MonoBehaviour
     }
 
     // ランダムな位置を取得するメソッド
-    Vector3 GetRandomRespawnPosition()
+    Vector3 GetRandomRespawnPosition(bool randomFlag, int spawnPosition)
     {
-        randomIndex = Random.Range(0, 4);
+        if (randomFlag)
+            randomIndex = Random.Range(0, 4);
+        else
+            randomIndex = spawnPosition;
 
         switch (randomIndex)
         {
             case 0:
-                return respawnL.position;
-            case 1:
                 return respawnLL.position;
+            case 1:
+                return respawnL.position;
             case 2:
                 return respawnM.position;
             case 3:
