@@ -176,7 +176,7 @@ public class TaskManager : MonoBehaviour
             // 回答のCSVへの蓄積
             csv.logSave("," + correctIndex + "," + selectedAnswerPos + "," + selectedAnswerConf);
         }
-        text1.SetText("Your accuracy is " + ((correctCount/5)*100).ToString() + "%");
+        // text1.SetText("Your accuracy is " + ((correctCount/5)*100).ToString() + "%");
     }
 
     IEnumerator CountDown(int sec)
