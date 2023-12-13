@@ -116,6 +116,7 @@ public class TaskManager : MonoBehaviour
     IEnumerator QuestionMode()
     {
         int correctCount = 0;
+        int[] score = new int[5];
         panel.FadeOut(1f);
         text1.SetText(strGuess);
         yield return new WaitForSeconds(2f);
@@ -170,13 +171,19 @@ public class TaskManager : MonoBehaviour
             if (correctIndex == selectedAnswerPos)
             {
                 correctCount++;
-                // Debug.Log();
+                // Debug.Log("correct");
             }
+            else
+            {
+                // Debug.Log("incorrect");
+            }
+            score[i] = selectedAnswerPos - correctIndex;
 
             // 回答のCSVへの蓄積
-            csv.logSave("," + correctIndex + "," + selectedAnswerPos + "," + selectedAnswerConf);
+            // "SelectedAnswerPos" "CorrectAnswer" "SelectedAnswerConfident" 
+            csv.logSave(selectedAnswerPos + "," + correctIndex + "," + selectedAnswerConf + ",");
         }
-        text1.SetText("Your accuracy is " + ((correctCount/5)*100).ToString() + "%");
+        text1.SetText("<<Your Distance>>\n1:" + score[0].ToString() + " 2:" + score[1].ToString() + " 3:" + score[2].ToString() + " 4:" + score[3].ToString() + " 5:" + score[4].ToString() + "\n<<Your accuracy>> \n\n" + ((correctCount/5)*100).ToString() + "%");
     }
 
     IEnumerator CountDown(int sec)
@@ -263,9 +270,9 @@ public class LogSave
                 fi.Create(),
                 System.Text.Encoding.UTF8))
         {
-            sw.WriteLine("," + "SelectedAnswerPos" +
+            sw.WriteLine("SelectedAnswerPos" +
                             "," + "CorrectAnswer" +
-                            "," + "SelectedAnswerConfident");
+                            "," + "SelectedAnswerConfident" + ",");
         }
     }
 
