@@ -1955,7 +1955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dcc8d780d3218d4fac81883d50645ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  portName: COM8
+  portName: COM6
   baudRate: 115200
   readMessage: 
 --- !u!4 &950704018
