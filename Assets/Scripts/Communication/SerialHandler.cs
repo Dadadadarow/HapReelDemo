@@ -17,7 +17,6 @@ public class SerialHandler : MonoBehaviour
 
     public string readMessage;
     private bool isRunning = false;
-
     private void Start()
     {
         OpenConnection();
