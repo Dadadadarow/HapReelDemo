@@ -183,7 +183,11 @@ public class TaskManager : MonoBehaviour
             // "SelectedAnswerPos" "CorrectAnswer" "SelectedAnswerConfident" 
             csv.logSave(selectedAnswerPos + "," + correctIndex + "," + selectedAnswerConf + ",");
         }
+<<<<<<< HEAD
         text1.SetText("<<Your Distance>>\n1:" + score[0].ToString() + " 2:" + score[1].ToString() + " 3:" + score[2].ToString() + " 4:" + score[3].ToString() + " 5:" + score[4].ToString() + "\n<<Your accuracy>> \n\n" + ((correctCount/5)*100).ToString() + "%");
+=======
+        // text1.SetText("Your accuracy is " + ((correctCount/5)*100).ToString() + "%");
+>>>>>>> 1e9be88c1451281cb8e08602c0e7a86d08b56ae9
     }
 
     IEnumerator CountDown(int sec)
